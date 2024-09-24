@@ -32,13 +32,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.th.group.fooddelivery.R
-import com.th.group.fooddelivery.ui.presentation.order.OrderScreen
-import com.th.group.fooddelivery.ui.presentation.order.OrderViewModel
 import com.th.group.fooddelivery.ui.presentation.favorite.FavoriteScreen
 import com.th.group.fooddelivery.ui.presentation.favorite.FavoriteViewModel
 import com.th.group.fooddelivery.ui.presentation.home.HomeScreen
 import com.th.group.fooddelivery.ui.presentation.home.HomeViewModel
 import com.th.group.fooddelivery.ui.presentation.menuItemDetails.MenuItemDetailsScreen
+import com.th.group.fooddelivery.ui.presentation.order.OrderScreen
+import com.th.group.fooddelivery.ui.presentation.order.OrderViewModel
 import com.th.group.fooddelivery.ui.presentation.profile.ProfileScreen
 import com.th.group.fooddelivery.ui.presentation.profile.ProfileViewModel
 import com.th.group.fooddelivery.ui.presentation.restaurant.RestaurantDetailsScreen
@@ -54,7 +54,6 @@ fun MainScreen() {
 
     val items = listOf(
         BottomNavScreen.Home,
-        BottomNavScreen.Order,
         BottomNavScreen.Search,
         BottomNavScreen.Favorite,
         BottomNavScreen.Profile
@@ -81,7 +80,13 @@ fun MainScreen() {
             startDestination = BottomNavScreen.Home.route,
             Modifier.padding(innerPadding)
         ) {
-            composable(BottomNavScreen.Home.route) {
+            composable(
+                route = BottomNavScreen.Home.route,
+                enterTransition = { null },
+                exitTransition = { null },
+                popExitTransition = { null },
+                popEnterTransition = { null }
+            ) {
                 HomeScreen(
                     navController,
                     HomeViewModel(),
@@ -89,20 +94,64 @@ fun MainScreen() {
                 )
             }
 
-            composable(BottomNavScreen.Order.route) { OrderScreen(OrderViewModel()) }
+            composable(
+                route = BottomNavScreen.Search.route,
+                enterTransition = { null },
+                exitTransition = { null },
+                popExitTransition = { null },
+                popEnterTransition = { null }
+            ) {
+                SearchScreen(SearchViewModel())
+            }
 
-            composable(BottomNavScreen.Search.route) { SearchScreen(SearchViewModel()) }
+            composable(
+                route = BottomNavScreen.Favorite.route,
+                enterTransition = { null },
+                exitTransition = { null },
+                popExitTransition = { null },
+                popEnterTransition = { null }
+            ) {
+                FavoriteScreen(FavoriteViewModel())
+            }
 
-            composable(BottomNavScreen.Favorite.route) { FavoriteScreen(FavoriteViewModel()) }
+            composable(
+                route = BottomNavScreen.Profile.route,
+                enterTransition = { null },
+                exitTransition = { null },
+                popExitTransition = { null },
+                popEnterTransition = { null }
+            ) {
+                ProfileScreen(ProfileViewModel())
+            }
 
-            composable(BottomNavScreen.Profile.route) { ProfileScreen(ProfileViewModel()) }
-
-            composable(DetailsScreens.RestaurantDetailsScreen.route) {
+            composable(
+                route = Screens.RestaurantDetailsScreen.route,
+                enterTransition = { null },
+                exitTransition = { null },
+                popExitTransition = { null },
+                popEnterTransition = { null }
+            ) {
                 RestaurantDetailsScreen(navHostController = navController)
             }
 
-            composable(DetailsScreens.MenuItemDetailsScreen.route) {
+            composable(
+                route = Screens.MenuItemScreen.route,
+                enterTransition = { null },
+                exitTransition = { null },
+                popExitTransition = { null },
+                popEnterTransition = { null }
+            ) {
                 MenuItemDetailsScreen(navController)
+            }
+
+            composable(
+                route = Screens.OrderScreen.route,
+                enterTransition = { null },
+                exitTransition = { null },
+                popExitTransition = { null },
+                popEnterTransition = { null }
+            ) {
+                OrderScreen(OrderViewModel())
             }
         }
     }
@@ -149,27 +198,18 @@ fun BottomNavItems(
                             }
                         }
                     ) {
-                        if (screen == BottomNavScreen.Order) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.market_img),
-                                contentDescription = screen.route,
-                                tint = if (currentRoute == screen.route) Orange0 else Color.Black
-                            )
-                        } else {
-                            val icon = when (screen) {
-                                BottomNavScreen.Home -> Icons.Default.Home
-                                BottomNavScreen.Search -> Icons.Default.Search
-                                BottomNavScreen.Favorite -> Icons.Default.Favorite
-                                BottomNavScreen.Profile -> Icons.Default.Person
-                                BottomNavScreen.Order -> TODO()
-                            }
-
-                            Icon(
-                                icon,
-                                contentDescription = screen.route,
-                                tint = if (currentRoute == screen.route) Orange0 else Color.Black
-                            )
+                        val icon = when (screen) {
+                            BottomNavScreen.Home -> Icons.Default.Home
+                            BottomNavScreen.Search -> Icons.Default.Search
+                            BottomNavScreen.Favorite -> Icons.Default.Favorite
+                            BottomNavScreen.Profile -> Icons.Default.Person
                         }
+
+                        Icon(
+                            icon,
+                            contentDescription = screen.route,
+                            tint = if (currentRoute == screen.route) Orange0 else Color.Black
+                        )
                     }
 
                     Text(

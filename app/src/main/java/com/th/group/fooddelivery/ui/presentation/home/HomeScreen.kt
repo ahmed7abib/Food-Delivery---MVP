@@ -2,6 +2,7 @@ package com.th.group.fooddelivery.ui.presentation.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -45,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.th.group.fooddelivery.R
-import com.th.group.fooddelivery.ui.presentation.DetailsScreens
+import com.th.group.fooddelivery.ui.presentation.Screens
 import com.th.group.fooddelivery.ui.presentation.favorite.IconWithText
 import com.th.group.fooddelivery.ui.presentation.restaurant.RestaurantsViewModel
 import com.th.group.fooddelivery.ui.theme.Bink
@@ -88,8 +89,7 @@ fun HomeScreen(
                 .fillMaxSize()
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.clickable { showSheet = true }
+                verticalAlignment = Alignment.CenterVertically
             ) {
 
                 if (currentAddress.addressType == AddressType.HOME) {
@@ -108,29 +108,61 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.width(12.dp))
 
-                Text(
-                    text = "${currentAddress.addressType.value},",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 14.sp
-                )
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                        .clickable { showSheet = true }
+                ) {
 
-                Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "${currentAddress.addressType.value},",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
 
-                Text(
-                    text = "${currentAddress.blockNumber}. ${currentAddress.streetName}, ${currentAddress.city}",
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                    Spacer(modifier = Modifier.width(6.dp))
 
-                Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "${currentAddress.blockNumber}. ${currentAddress.streetName}, ${currentAddress.city}",
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 12.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
 
-                Image(
-                    painter = painterResource(id = R.drawable.bottom_arrow_icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp)
-                )
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Image(
+                        painter = painterResource(id = R.drawable.bottom_arrow_icon),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(16.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                }
+
+                Box(
+                    modifier = Modifier
+                        .size(30.dp)
+                        .clickable { navHostController.navigate(Screens.OrderScreen.route) }
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cart_img),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(28.dp)
+                            .align(Alignment.BottomCenter)
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .size(12.dp)
+                            .clip(CircleShape)
+                            .background(color = Color.Red)
+                            .align(Alignment.TopEnd)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -254,7 +286,7 @@ fun HomeScreen(
                                         "restaurantData",
                                         it
                                     )
-                                    navHostController.navigate(DetailsScreens.RestaurantDetailsScreen.route)
+                                    navHostController.navigate(Screens.RestaurantDetailsScreen.route)
                                 },
                             colors = CardColors(
                                 Color.White, Color.White,
@@ -431,7 +463,6 @@ fun SliderItem(item: PromotionDto) {
         }
     }
 }
-
 
 @Composable
 fun SliderIndicator(active: Boolean) {

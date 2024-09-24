@@ -23,11 +23,10 @@ sealed class BottomNavScreen(val route: String) {
     data object Search : BottomNavScreen(SEARCH_SCREEN)
     data object Favorite : BottomNavScreen(FAVORITE_SCREEN)
     data object Profile : BottomNavScreen(PROFILE_SCREEN)
-    data object Order : BottomNavScreen(ORDER_SCREEN)
 }
 
-sealed class DetailsScreens(val route: String) {
-    data object RestaurantDetailsScreen : DetailsScreens(RESTAURANT_DETAILS_SCREEN)
-    data object MenuItemDetailsScreen : DetailsScreens(MENU_ITEM_DETAILS_SCREEN)
-
+sealed class Screens(val route: String) {
+    data object OrderScreen : Screens(ORDER_SCREEN)
+    data object MenuItemScreen : Screens(MENU_ITEM_DETAILS_SCREEN)
+    data object RestaurantDetailsScreen : Screens(RESTAURANT_DETAILS_SCREEN)
 }
